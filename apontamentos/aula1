@@ -1,0 +1,89 @@
+#Aula 1
+
+Problemas de otimização: melhor solução de um conjunto de soluções possíveis.
+
+Vamos aplicar a machine learning: (classificação, reconhecimento de padrões, reconhecimento de imagens)
+
+Y = mx+b
+
+var de decisão = parâmetros - w
+
+função objectivo = loss-function / cost-function (avaliar a qualidade das potenciais soluções)
+
+restrições - valores aceitáveis para cada parâmetro.
+
+w* é os parâmetros da solução optima
+
+
+Minimizar Função de Custo
+
+qualquer prob. de max pode ser um problema de minimização: max F(w) = min -F(w) * primeiro menos tá mal nos slides
+
+
+Problemas de Otimização sem restrições
+
+Minimiza ero em previsão e valor obs.
+
+Problema dos minimos quadrados
+
+Compara cada previsão (y^n) com cada par de w;x^n
+
+Calculamos apartir de gradientes e matriz hessianas se n = nr var, temos uma matriz (n.n)
+
+Gradientes: F'
+Hessiana: F''
+
+f'=0 e f'' >0 (minimo)
+f'=0 e f'' <0 (maximo)
+
+Ponto estacionario: ponto em que o gradiente é 0.
+
+Ponto sela: valores proprios negativos e positivos (muda de curvatura)
+
+f definida positiva (val proprios pos)
+f definida negativa (val proprios neg)
+f semi positiva (val proprios pos e 0)
+f semi negativos (val proprios neg e 0)
+
+Clasisificar pontos estacionários: calcular gradiente e hessianasdps, igualar gradiente a 0.
+
+deu pontos - depoois dos pontos, subsittuir nahessiana e calcular valores proprios
+w(0,0)T
+w(1,0)T
+w(0,-1)T
+w(-1,-1)T = maximo
+
+Quando complica muito (cenas mt grandes), usamos metodos iterativos.
+
+Metodos Iterativos
+
+aproximação inicial - convergencia global - encontro solução  optima onde tiver
+                    - "            local - "          "         "     se tiver perto
+
+
+Calcular direcçºãod e descida
+procurar reduzir F ao longo da direcçºãod
+
+
+é o metodo de procura undimensional geral
+
+w(1); k=1
+
+Calcular a direcção: grad.F(w^k)T s^k <0
+Encontrar comprimento do passo (eta) F(w^k + eta.s^k) < F(w^k)
+  - no pratico é dar um valor constante. Quando tem muitos dados, não vale a pena
+  -  com poucos dados, é mt mais eficiente, vale a pena.
+
+condição de armijo: calcula o eta_k que tem uma cena significativa
+
+critŕios de paragem
+
+Metodo do gradiente
+
+calcular direcçºão
+calcular comprimento do passo
+
+
+Estocástico vs (...)
+
+Taxa de aprendizagem = 
