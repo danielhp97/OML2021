@@ -17,19 +17,18 @@ x_test
 
 
 # Exercicio 3
-def gradiente():
-    print()
+def gradiente(w,x,I):
+    for i in range(0,I):
+        sum += np.dot(w,pow(x,i)) # must have 2 np arrays.
+    return sum
 
 
-def gradienteE(w,X,Y,G):
-    print()
-
-
-def gradiente_batch(x,y):
+def gradiente_batch(w,I,x,y):
     n = len(x) - 1 if x else None;
     if n == None : raise Exception("Empty Array")
     for i in range(1,n):
-        sum_gradiente += (gradiente(w,x[i],I) - y[i]) * pow(x[i],0:I)
+        for j in range(0,I):
+            sum_gradiente += (gradiente(w,x[i],I) - y[i]) * pow(x[i],j)
     sum_gradiente = sum_gradiente / n
     return sum_gradiente
 
@@ -52,22 +51,25 @@ w1 = np.full((1,I),0);
 tol = 1e-4
 # definimos também o nr max de iterações
 nt = len (x_train) #onde nt é o nr de obs do treino
-maxit = 10*Nt
-
+maxit = 10*nt
+k = 1 # ponto inicial
 def principal():
     while(norm(gradiente_batch() > tol && k< max it)): # criterios de paragem
         # calcular gradente no ponto wk
-
+        grad_k = gradiente_batch(wk,x,y)
         # calcular direcção de procura
-
+        s_k = -grad_k
         # calcular comprimento do passo
 
         # calcular Função objectivo no ponto wk
-
+        Custo_k = fun_Custo(w,X,Y)
         # Calcular o gradiente completo no ponto wk
-
+        grad_full = gradiente_batch(w,X,Y)
+        # Calcular comprimento do passo
+        eta_k = passo(w,Custo_k,grad_full,s_k,X,Y,k,nt)
         # Calcular novo ponto
-
+        wk = wk + eta_k*sk
+        k = k+1
         # Inserir algoritmo para calcular ponto necessários a calcular gráfico
 
     print("A solução ótima")
