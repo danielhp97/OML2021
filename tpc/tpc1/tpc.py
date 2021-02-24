@@ -17,6 +17,28 @@ x_test
 
 
 # Exercicio 3
+def backtrackingArmijo():
+    delta=0.1
+    eta_k=1
+    while( fun_Custo(w+eta_k*s_k,X,Y)> Custo_k+delta*eta_k*grad_full*s_k):
+        eta_k=eta_k/2
+        if eta_k*norm(s_k)<=1e-8:
+            eta_k=1
+    return eta_k
+
+
+def passo(w,Custo_k,grad_full,s_k,X,Y,k,nt):
+    eta_k = backtrackingArmijo(w,Custo_k,grad_full,s_k,X,Y)
+    return eta_k
+
+def fun_Custo(w,X,Y):
+    I= len(w)-1
+    nt=len(X)
+    for i in range(1,nt):
+        val += pow((gradiente(w,X[i],I) -Y[i]),2)
+    val= val/(2*nt)
+    return(val)
+
 def gradiente(w,x,I):
     for i in range(0,I):
         sum += np.dot(w,pow(x,i)) # must have 2 np arrays.
