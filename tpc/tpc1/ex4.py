@@ -101,3 +101,11 @@ def principal():
     print("Out-Sample Error")
 
     #Print do grafico com valor da Função CUsto ao longo do processo Iterativo
+
+
+
+# Exercise 4
+
+# Exercise 5
+
+# Exercise 6
