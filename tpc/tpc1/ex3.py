@@ -31,7 +31,7 @@ Y_data_test = Extract(x_test,1)
 def backtrackingArmijo():
     delta=0.1
     eta_k=1
-    while( fun_Custo(w+eta_k*s_k,X,Y)> Custo_k+delta*eta_k*grad_full*s_k):
+    while( fun_Custo(w+eta_k*s_k,X,Y)> Custo_k+delta*eta_k*np.dot(grad_full.T,s_k)):
         eta_k=eta_k/2
         if eta_k*LA.norm(s_k)<=1e-8:
             eta_k=1
@@ -70,7 +70,6 @@ def gradiente_batch(w,x,y):
 
 
 
-# escolher grau de polinomio a ajustar.
 I=7
 # Método de gradiente completo (gradiente de batch)
 # Vamos utilizar algoritmo de Armijo, para a procura
@@ -81,7 +80,12 @@ nt = len (x_train) #onde nt é o nr de obs do treino
 maxit = 10*nt # definimos também o nr max de iterações
 k = 1 # ponto inicial
 
+# escolher grau de polinomio a ajustar.
+
 def principal():
+    wk = 0
+    Custo_k = 0
+    print(gradiente_batch(w1,X_data_train,Y_data_train))
     while(LA.norm(gradiente_batch(w1,X_data_train,Y_data_train) > tol) and k< maxit): # criterios de paragem
         grad_k = gradiente_batch(w1,X_data_train,Y_data_train) # calcular gradente no ponto wk
         s_k = -grad_k # calcular direcção de procura
@@ -90,9 +94,12 @@ def principal():
         eta_k = passo(w1,Custo_k,grad_full,s_k,X_data_train,Y_dat_train,k,nt) # Calcular comprimento do passo
         wk = wk + eta_k*sk # Calcular novo ponto
         k = k+1 # Inserir algoritmo para calcular ponto necessários a calcular gráfico
-    print("A solução ótima")
-    print("In-Sample Error")
-    print("Out-Sample Error")
+        print(wk)
+    #print("A solução ótima:", wk)
+    #E_dt = Custo_k(wk,X_data_train,Y_data_train)
+    #print("In-Sample Error: ", E_dt)
+    #E_dv = Custo_k(wk,X_data_teste,X_data_teste)
+    #print("Out-Sample Error: ", E_dv)
 
 principal()
     #Print do grafico com valor da Função CUsto ao longo do processo Iterativo
