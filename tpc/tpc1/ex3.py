@@ -56,7 +56,7 @@ def fun_Custo(w,X,Y):
 def gradiente(w,x,I):
     sum = 0
     for i in range(0,I):
-        sum += w[:,i]*pow(x,i)#np.dot() # must have 2 np arrays.
+        sum += w*pow(x,i)#np.dot() # must have 2 np arrays.
     return sum
 
 
@@ -65,8 +65,10 @@ def gradiente_batch(w,x,y):
     n = len(x) - 1 if x else None;
     if n == None : raise Exception("Empty Array")
     for i in range(1,n):
+        sum_pow = 0
         for j in range(0,I):
-            sum_gradiente += (gradiente(w,x[i],I) - y[i]) * pow(x[i],j)
+            sum_pow += pow(x[i],j)
+        sum_gradiente += (gradiente(w,x[i],I) - y[i]) * sum_pow
     sum_gradiente = sum_gradiente / n
     return sum_gradiente
 
