@@ -43,18 +43,20 @@ def passo(w,Custo_k,grad_full,s_k,X,Y,k,nt):
     return eta_k
 
 def fun_Custo(w,X,Y):
+    print("Entrou na funcao")
     val = 0
     I= len(w)-1
     nt=len(X)
     for i in range(1,nt):
         val += pow((gradiente(w,X[i],I) -Y[i]),2)
     val= val/(2*nt)
+    print("Chegou ao fim da funcao")
     return(val)
 
 def gradiente(w,x,I):
     sum = 0
     for i in range(0,I):
-        sum += np.dot(w,pow(x,i)) # must have 2 np arrays.
+        sum += w[:,i]*pow(x,i)#np.dot() # must have 2 np arrays.
     return sum
 
 
@@ -75,6 +77,9 @@ I=7
 # Vamos utilizar algoritmo de Armijo, para a procura
 # ou seja, mesmo método de G=1 e P=1 (segundo o exemplo da prof.)
 w1 = np.full((1,I),0); # definimos ponto inicial como w^(1) = (0,0,0,...0)
+w1
+w2 = np.zeros((I + 1))
+w2
 tol = 1e-4 # temos que definir um valor de tolerancia
 nt = len (x_train) #onde nt é o nr de obs do treino
 maxit = 10*nt # definimos também o nr max de iterações
@@ -85,20 +90,29 @@ k = 1 # ponto inicial
 def principal():
     wk = 0
     Custo_k = 0
-    print(gradiente_batch(w1,X_data_train,Y_data_train))
-    while(LA.norm(gradiente_batch(w1,X_data_train,Y_data_train) > tol) and k< maxit): # criterios de paragem
-        grad_k = gradiente_batch(w1,X_data_train,Y_data_train) # calcular gradente no ponto wk
-        s_k = -grad_k # calcular direcção de procura
-        Custo_k = fun_Custo(w1,X_data_train,Y_data_train) # calcular Função objectivo no ponto wk
-        grad_full = gradiente_batch(w1,X_data_train,Y_dat_train) # Calcular o gradiente completo no ponto wk
-        eta_k = passo(w1,Custo_k,grad_full,s_k,X_data_train,Y_dat_train,k,nt) # Calcular comprimento do passo
-        wk = wk + eta_k*sk # Calcular novo ponto
-        k = k+1 # Inserir algoritmo para calcular ponto necessários a calcular gráfico
-        print(wk)
-    #print("A solução ótima:", wk)
-    #E_dt = Custo_k(wk,X_data_train,Y_data_train)
+    f = 1
+    d = 0
+
+    print(tol)
+    print(f)
+    print(maxit)
+    print(LA.norm(gradiente_batch(w1,X_data_train,Y_data_train)))
+    while(d ==0 ):
+        if(LA.norm(gradiente_batch(w1,X_data_train,Y_data_train)) <= tol and f< maxit):
+            d = 1
+        else:# criterios de paragem
+            grad_k = gradiente_batch(w1,X_data_train,Y_data_train) # calcular gradente no ponto wk
+            print("grad_k: ", grad_k)
+            s_k = -grad_k # calcular direcção de procura
+            Custo_k = fun_Custo(w1,X_data_train,Y_data_train) # calcular Função objectivo no ponto wk
+            grad_full = gradiente_batch(w1,X_data_train,Y_data_train) # Calcular o gradiente completo no ponto wk
+            eta_k = passo(w1,Custo_k,grad_full,s_k,X_data_train,Y_data_train,k,nt) # Calcular comprimento do passo
+            wk = wk + eta_k*s_k # Calcular novo ponto
+            f = f+1 # Inserir algoritmo para calcular ponto necessários a calcular gráfico
+    print("A solução ótima:", wk)
+    #Error_dt = fun_Custo(wk,X_data_train,Y_data_train)
     #print("In-Sample Error: ", E_dt)
-    #E_dv = Custo_k(wk,X_data_teste,X_data_teste)
+    #E_dv = fun_Custo(wk,X_data_test,X_data_test)
     #print("Out-Sample Error: ", E_dv)
 
 principal()
