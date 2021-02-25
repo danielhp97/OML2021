@@ -28,13 +28,19 @@ Y_data_test = Extract(x_test,1)
 
 
 # Exercicio 3
-def backtrackingArmijo():
+def backtrackingArmijo(w,Custo_k,grad_full,s_k,X,Y):
     delta=0.1
     eta_k=1
-    while( fun_Custo(w+eta_k*s_k,X,Y)> Custo_k+delta*eta_k*np.dot(grad_full.T,s_k)):
-        eta_k=eta_k/2
-        if eta_k*LA.norm(s_k)<=1e-8:
-            eta_k=1
+    d=0
+    print("np_dot:", np.dot(grad_full.T,s_k))
+    while(d==0):
+        if( fun_Custo(w+eta_k*s_k,X,Y ) >= (Custo_k+ delta*eta_k * np.dot(grad_full.T,s_k)) ):
+            d=0
+            eta_k=eta_k/2
+            if eta_k*LA.norm(s_k)<=1e-8:
+                eta_k=1
+        else:
+            d=1
     return eta_k
 
 
@@ -108,6 +114,7 @@ def principal():
             s_k = -grad_k # calcular direcção de procura
             Custo_k = fun_Custo(w1,X_data_train,Y_data_train) # calcular Função objectivo no ponto wk
             grad_full = gradiente_batch(w1,X_data_train,Y_data_train) # Calcular o gradiente completo no ponto wk
+            print("grad_k: ", grad_full)
             eta_k = passo(w1,Custo_k,grad_full,s_k,X_data_train,Y_data_train,k,nt) # Calcular comprimento do passo
             wk = wk + eta_k*s_k # Calcular novo ponto
             f = f+1 # Inserir algoritmo para calcular ponto necessários a calcular gráfico
